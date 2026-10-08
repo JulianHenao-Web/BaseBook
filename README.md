@@ -26,3 +26,21 @@ dividida en varios modulos funcionales
 - **Internet** 
 instalacion de requeriments
 --pip install -r requirements.txt
+
+EStructura  deseada 
+biblioteca/
+├── main.py                      # arranque (Flask o consola)
+├── nucleo/                     # SOLO funciones puras, sin imports de BD ni Flask
+│   ├── tipos.py                # Libro, Prestamo, Reserva, Multa, Usuario (inmutables)
+│   ├── reglas_catalogo.py      # filtrar_libros(), estado_resultante()
+│   ├── reglas_prestamo.py      # puede_prestar(), crear_prestamo(), cerrar_prestamo()
+│   ├── reglas_reserva.py       # puede_reservar(), siguiente_en_cola()
+│   ├── reglas_multa.py         # dias_retraso(), calcular_multa()
+│   └── permisos.py             # PERMISOS = {rol: {operaciones}}, rol_permite()
+├── almacen/                    # funciones de entrada/salida a la BD
+│   ├── conexion.py             # transaccion()
+│   ├── libros.py  prestamos.py  reservas.py  multas.py  usuarios.py  parametros.py
+├── interfaz/                   # rutas web o menús
+├── pruebas/
+│   ├── test_nucleo/          
+└── datos/
