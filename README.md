@@ -46,6 +46,12 @@ Arquitectura **Cliente-Servidor Web**, organizada internamente en **tres capas**
 
 El núcleo de reglas no depende de nada externo, por lo que se puede probar sin servidor ni base de datos.
 
+La integración inicial con Open Library está aislada en `Basebook-code/almacen/api_libros.py`.
+`buscar_libros(consulta)` permite consultar metadatos externos normalizados (título,
+autores, año, editoriales, ISBN, idiomas, ediciones y portada). Esta búsqueda no
+guarda los resultados ni reemplaza el catálogo local: disponibilidad, préstamos y
+ejemplares deben seguir gestionándose en BaseBook.
+
 ## Tecnologías
 
 - **Python** y **Flask** (framework web)
