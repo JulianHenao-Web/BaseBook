@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Crear cuenta | BaseBook{% endblock %}
+
+{% block content %}
+  <section class="auth-layout">
+    <div class="auth-intro">
+      <p class="eyebrow">Únete a la biblioteca</p>
+      <h1>Crea tu cuenta.</h1>
+      <p>El registro crea una cuenta de lector en el servicio de usuarios configurado.</p>
+    </div>
+    <form class="form-card" action="{{ url_for('registro') }}" method="post">
+      <h2>Registro de lector</h2>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-row">
+        <div>
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label for="apellido">Apellido</label>
+          <input id="apellido" name="apellido" type="text" autocomplete="family-name">
+        </div>
+      </div>
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" name="correo" type="email" autocomplete="email" required>
+      <div class="form-row">
+        <div>
+          <label for="documento">Documento <span class="optional">(opcional)</span></label>
+          <input id="documento" name="documento" type="text" autocomplete="off">
+        </div>
+        <div>
+          <label for="telefono">Teléfono <span class="optional">(opcional)</span></label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel">
+        </div>
+      </div>
+      <label for="contrasena">Contraseña</label>
+      <input id="contrasena" name="contrasena" type="password"
+             autocomplete="new-password" minlength="8" required>
+      <label for="confirmar_contrasena">Confirmar contraseña</label>
+      <input id="confirmar_contrasena" name="confirmar_contrasena" type="password"
+             autocomplete="new-password" minlength="8" required>
+      <button class="button button-primary button-full" type="submit">Crear cuenta</button>
+      <p class="form-switch">¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a></p>
+    </form>
+  </section>
+{% endblock %}

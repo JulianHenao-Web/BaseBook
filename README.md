@@ -52,6 +52,26 @@ autores, año, editoriales, ISBN, idiomas, ediciones y portada). Esta búsqueda 
 guarda los resultados ni reemplaza el catálogo local: disponibilidad, préstamos y
 ejemplares deben seguir gestionándose en BaseBook.
 
+## Interfaz web inicial
+
+La aplicación Flask se inicia desde `Basebook-code/`:
+
+```powershell
+python -m pip install -r requirements.txt
+$env:FLASK_SECRET_KEY = "reemplaza-por-una-clave-aleatoria"
+$env:SUPABASE_URL = "tu-url-de-supabase"
+$env:SUPABASE_ANON_KEY = "tu-clave-anon"
+$env:SUPABASE_SERVICE_ROLE_KEY = "tu-clave-service-role"
+python main.py
+```
+
+Abre `http://127.0.0.1:5000`. La pantalla incluye búsqueda de libros, inicio de
+sesión y registro. El catálogo funciona independientemente del servicio de
+usuarios; si falta un módulo o una dependencia opcional, las páginas siguen
+cargando y la acción correspondiente informa que el servicio no está disponible.
+Los módulos vacíos de préstamos, reservas y multas se muestran como pendientes.
+No publiques las claves de Supabase ni la clave secreta de Flask.
+
 ## Tecnologías
 
 - **Python** y **Flask** (framework web)
@@ -66,9 +86,10 @@ BaseBook/
 ├── README.md
 └── Basebook-code/
     ├── main.py                  # arranque de la aplicación web
+    ├── requirements.txt         # Flask, Supabase y configuración de entorno
     ├── interfaz/                # capa de presentación
-    │   ├── plantillas/
-    │   └── estaticos/
+    │   ├── plantillas/          # catálogo, inicio de sesión y registro
+    │   └── estaticos/styles.css
     ├── nucleo/                  # capa de negocio (funciones puras)
     │   ├── tipos.py
     │   ├── reglas_catalogo.py
@@ -87,6 +108,8 @@ BaseBook/
     │   ├── usuarios.py
     │   └── parametros.py
     ├── pruebas/
+    │   ├── test_interfaz/
+    │   ├── test_almacen/
     │   └── test_nucleo/
     └── datos/                   # esquema SQL y datos de ejemplo
 ```

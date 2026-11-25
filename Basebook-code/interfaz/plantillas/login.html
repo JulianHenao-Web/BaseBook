@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión | BaseBook{% endblock %}
+
+{% block content %}
+  <section class="auth-layout">
+    <div class="auth-intro">
+      <p class="eyebrow">Qué bueno tenerte de vuelta</p>
+      <h1>Inicia sesión en BaseBook.</h1>
+      <p>Accede a tu cuenta de biblioteca para continuar.</p>
+    </div>
+    <form class="form-card" action="{{ url_for('login') }}" method="post">
+      <h2>Iniciar sesión</h2>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" name="correo" type="email" autocomplete="email" required>
+      <label for="contrasena">Contraseña</label>
+      <input id="contrasena" name="contrasena" type="password"
+             autocomplete="current-password" required>
+      <button class="button button-primary button-full" type="submit">Entrar</button>
+      <p class="form-switch">¿Aún no tienes cuenta? <a href="{{ url_for('registro') }}">Regístrate</a></p>
+    </form>
+  </section>
+{% endblock %}

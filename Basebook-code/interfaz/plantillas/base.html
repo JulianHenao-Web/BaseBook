@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f2">
+  <title>{% block title %}BaseBook{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('inicio') }}" aria-label="BaseBook, inicio">
+      <span class="brand-mark">B</span>
+      <span>BaseBook</span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a href="{{ url_for('inicio') }}">Catálogo</a>
+      {% if session.get("usuario") %}
+        <span class="nav-user">Hola, {{ session["usuario"]["nombre"] }}</span>
+        <form action="{{ url_for('logout') }}" method="post" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="button button-outline button-small" type="submit">Cerrar sesión</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Iniciar sesión</a>
+        <a class="button button-primary button-small" href="{{ url_for('registro') }}">Crear cuenta</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% if mensajes %}
+        <section class="flash-list" aria-live="polite">
+          {% for categoria, mensaje in mensajes %}
+            <p class="flash flash-{{ categoria }}">{{ mensaje }}</p>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <span>BaseBook · Gestión de biblioteca</span>
+    <span>Los datos bibliográficos externos provienen de Open Library.</span>
+  </footer>
+</body>
+</html>
