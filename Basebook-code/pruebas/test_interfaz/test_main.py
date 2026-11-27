@@ -37,7 +37,7 @@ class PruebasInterfazWeb(unittest.TestCase):
         )
 
         self.assertEqual(respuesta.status_code, 503)
-        self.assertIn(b"Este servicio no est", respuesta.data)
+        self.assertIn(b"El servicio no esta disponible", respuesta.data)
 
     def test_login_crea_sesion_sin_guardar_credenciales(self):
         token = self._token_csrf("/login")
