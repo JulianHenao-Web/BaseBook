@@ -1,6 +1,8 @@
 """ Gestion del catalogo de libros BaseBook."""
 
 from almacen import api_libros
+from almacen.conexion import cliente_admin
+from almacen.usuarios import registrar_log, ErrorBaseDatos
 
 class LibroYaRegistrado(Exception):
     """El libro ya existe en el catalogo."""
@@ -35,3 +37,14 @@ def a_datos_catalogo(libro: api_libros.LibroExterno) -> dict:
         "portada":libro.portada_url,
         "tema": None,
     }
+
+def _validar_ejemplares(cantidad):
+    """Comprueba que la cantidad de ejemplares sea valida."""
+
+    if (
+        not isinstance(cantidad, int)
+        or isinstance(cantidad,bool)
+        or cantidad < 0
+    ):
+        raise EjemplaresInvalidos("La cantidad de ejemplares debe ser un entero no negativo")
+    
