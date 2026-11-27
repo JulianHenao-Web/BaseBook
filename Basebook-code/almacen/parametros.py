@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # Errores propios
 # ---------------------------------------------------------------------
 
+
 class ParametroNoEncontrado(ErrorUsuarios):
     """El parametro solicitado no existe en la base de datos."""
 
