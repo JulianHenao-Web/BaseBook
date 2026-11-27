@@ -1,0 +1,32 @@
+name: CI - Calidad y pruebas
+
+# Triggers: cuándo se ejecuta el workflow
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Jobs: los trabajos que debe realizar
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+
+    # Steps: los pasos individuales de este trabajo
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Revisar estilo del código (flake8)
+        run: flake8 .
+
+      - name: Ejecutar las pruebas (pytest)
+        run: pytest
