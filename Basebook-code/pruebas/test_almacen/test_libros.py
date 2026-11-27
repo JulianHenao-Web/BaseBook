@@ -31,6 +31,7 @@ class TestLibros(unittest.TestCase):
 
     @patch("almacen.libros.registrar_log")
     @patch("almacen.libros.cliente_admin")
+    
     def test_libro_duplicado(self, cliente_mock, log_mock):
 
         datos = {
