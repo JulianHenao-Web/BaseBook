@@ -3,6 +3,7 @@
 from almacen import api_libros
 from almacen.conexion import cliente_admin
 from almacen.usuarios import registrar_log, ErrorBaseDatos
+from postgrest.exceptions import APIError
 
 class LibroYaRegistrado(Exception):
     """El libro ya existe en el catalogo."""
@@ -47,4 +48,52 @@ def _validar_ejemplares(cantidad):
         or cantidad < 0
     ):
         raise EjemplaresInvalidos("La cantidad de ejemplares debe ser un entero no negativo")
-    
+
+def agregar_libro(datos, total_ejemplares, actor_id =None):
+    """Registra un libro en el catalogo."""
+
+    isbn = datos.get("isbn")
+
+    if not isbn:
+        raise ValueError("El libro debe tener un ISBN.")
+
+    _validar_ejemplares(total_ejemplares)
+
+    registro ={
+        "isbn":isbn,
+        "titulo": datos.get("titulo"),
+        "autor": datos.get("autor"),
+        "anio": datos.get("anio"),
+        "portada": datos.get("portada"),
+        "tema": datos.get("tema"),
+        "total_ejemplares":total_ejemplares,
+        "ejemplares_disponibles": total_ejemplares,
+        "estado": "activo",
+    }
+
+    try: 
+        respuesta =(
+            cliente_admin()
+            .table("libros")
+            .insert(registro)
+            .execute()
+        )
+
+    except APIError as error:
+        if error.code =="23505":
+            raise LibroYaRegistrado(
+                "El libro ya está registrado."
+            )from error
+
+        raise ErrorBaseDatos(
+            "No se puede registrar el libro."
+        )from error
+
+    if not respuesta.data:
+        raise ErrorBaseDatos(
+            "No se recibieron los datos del libro registrado."
+        )
+
+    registrar_log(actor_id, "agregar_libro",{"isbn":isbn})
+
+    return respuesta.data[0]
