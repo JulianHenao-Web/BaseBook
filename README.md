@@ -8,7 +8,7 @@ Aplicación web para gestionar el préstamo y la devolución de libros en una bi
 
 ## Estado del proyecto
 
-**Primera entrega: análisis, modelado y organización del proyecto.** El repositorio contiene la estructura inicial del sistema: las carpetas y los archivos de cada módulo. Los archivos de código están creados pero todavía sin implementar; el prototipo se desarrollará en la entrega final.
+**Primera entrega: análisis, modelado y organización del proyecto.** El núcleo ya contiene reglas puras para catálogo, préstamos, reservas, multas, usuarios, autenticación y permisos, con pruebas unitarias sin base de datos. La integración completa de préstamos, reservas y multas con almacenamiento y rutas sigue pendiente.
 
 ## Problema que resuelve
 
